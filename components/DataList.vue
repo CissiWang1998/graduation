@@ -42,13 +42,13 @@
             </Header>
             <Layout >
                 <Sider hide-trigger :style="{background: '#fff'}">
-                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']" @on-select="onSelect2">
-                        <MenuItem class="menuItem" v-for="menuItem in menuItems" v-text="menuItem.value" :name="menuItem.name" :key="menuItem.value">单项录入</MenuItem>
+                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']" @on-select="created">
+                        <MenuItem class="menuItem" v-for="menuItem in menuItems" v-text="menuItem[1]" :name="menuItem[2]" :key="menuItem[2]">单项录入</MenuItem>
                     </Menu>
                 </Sider>
                 <Layout>
                     <Content :style="{padding: '24px', minHeight: '600px', background: '#fff'}">
-                        <router-view> </router-view>
+                        <keep-alive><router-view> </router-view></keep-alive>
                     </Content>
                 </Layout>
             </Layout>
@@ -56,18 +56,34 @@
     </div>
 </template>
 <script>
+import api from '../fetch/api'
+console.log(1)
 export default {
     data () {
         return {
             value13: '',
             select3: 'day',
-            menuItems: [{value: '1', name: 'student'}, {value: '2', name: 'teacher'}] // 数据项数
+            menuItems: [[1, '1', 'student'], [2, '2', 'teacher']] // 数据项数
         }
     },
     methods: {
         onSelect2 (name) {
-        console.log(name)
-        this.$router.replace('/saveOne/show')
+            console.log(name)
+            this.$router.replace('/saveOne/show')
+        },
+        created () {
+            console.log(1)
+            api.DataSchemaList()
+                .then(res => {
+                    console.log(res)
+                    if (res.success) {
+                        this.menuItems = res
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            // console.log(this.menuItems)
         }
     }
 }

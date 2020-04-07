@@ -42,7 +42,7 @@
                     </Upload>
                 </div>
                 <div class="layout-ensure">
-                    <Button :size="buttonSize" v-bind:disabled="comfirm_button_dis" type="primary" @click="upload_file">确定上传</Button>
+                    <Button  v-bind:disabled="comfirm_button_dis" type="primary" @click="upload_file">确定上传</Button>
                 </div>
             </div>
         </layout>
