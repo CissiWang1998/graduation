@@ -41,16 +41,19 @@ export default {
             api.getTableDataByName(this.table_name)
                 .then(res => {
                     let col = []
-                    for (var key in res[0]) {
-                        col.push({'title': key, 'key': key})
+                    if (res.length === 0) {
+                        res = []
+                    } else {
+                        for (var key in res[0]) {
+                            col.push({'title': key, 'key': key})
+                        }
+                        col.push({
+                            title: 'Action',
+                            slot: 'action',
+                            width: 150,
+                            align: 'center'
+                        })
                     }
-                    col.push({
-                        title: 'Action',
-                        slot: 'action',
-                        width: 150,
-                        align: 'center'
-                    })
-                    console.log(col)
                     this.columns12 = col
                     this.data6 = res
                     this.ajaxHistoryData = this.data6

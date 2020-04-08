@@ -25,14 +25,14 @@
         <Header style="background: white;">
             <Menu mode="horizontal" theme="light" active-name="1">
                 <div class="layout-logo">
-                    <Select v-model="model8" clearable style="width:200px" placeholder="请选择导入数据项">
-                        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    <Select v-model="model8" clearable style="width:200px" placeholder="请选择导入数据项" @on-change="handleChange">
+                        <Option v-for="item in dataList" :value="item.table_name" :key="item.table_name">{{ item.name }}</Option>
                     </Select>
                 </div>
             </Menu>
         </Header>
         <layout>
-            <strong :style="{margin: '10px'}">文件格式如下(仅支持xls,xlsx)</strong>
+            <strong :style="{margin: '10px'}">数据格式如下(仅支持xls,xlsx)</strong>
             <Table border :columns="columns1" :data="data1"></Table>
             <div class="upload">
                 <div class="layout-nav">
@@ -49,105 +49,102 @@
     </layout>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                file: null,
-                loadingStatus: false,
-                comfirm_button_dis: true,
-                cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    {
-                        value: 'London',
-                        label: 'London'
-                    },
-                    {
-                        value: 'Sydney',
-                        label: 'Sydney'
-                    },
-                    {
-                        value: 'Ottawa',
-                        label: 'Ottawa'
-                    },
-                    {
-                        value: 'Paris',
-                        label: 'Paris'
-                    },
-                    {
-                        value: 'Canberra',
-                        label: 'Canberra'
-                    }
-                ],
-                model8: '',
-                columns1: [
-                    {
-                        title: 'Name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    }
-                ],
-                data1: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ]
-            }
-        },
-        methods: {
-            onBefore (file) {
-                this.comfirm_button_dis = false;
-                this.file = file;
-                alert(1234);
-                return false;
-            },
-            upload_file () {
-                if (this.model8 === '') {
-                    this.$Message.info('请选择要上传的数据');
-                    return;
-                }
-                if (this.file === null) {
-                    this.$Message.info('请上传文件');
-                    return;
-                }
-                this.loadingStatus = true;
-                setTimeout(() => {
-                    this.file = null;
-                    this.loadingStatus = false;
-                    this.$Message.success('Success')
-                }, 1500);
-                alert(123224)
-            }
+import api from '../fetch/api'
+import XLSX from 'xlsx'
+export default {
+    data () {
+        return {
+            file: null,
+            loadingStatus: false,
+            comfirm_button_dis: true,
+            dataList: [],
+            model8: '',
+            columns1: [],
+            data1: [],
+            outputs: []
         }
+    },
+    methods: {
+        onBefore (file) {
+            this.comfirm_button_dis = false;
+            this.file = file;
+            this.readExcel(file)
+            this.data1 = this.outputs
+            return false;
+        },
+        upload_file () {
+            if (this.model8 === '') {
+                this.$Message.info('请选择要上传的数据');
+                return;
+            }
+            if (this.file === null) {
+                this.$Message.info('请上传文件');
+                return;
+            }
+            this.loadingStatus = true;
+            setTimeout(() => {
+                this.file = null;
+                this.loadingStatus = false;
+                this.$Message.success('Success')
+            }, 1500);
+            console.log(this.outputs)
+        },
+        handleChange (value) {
+            api.getTableDataByName(value)
+                .then(res => {
+                    let value = {}
+                    this.columns1 = []
+                    this.data1 = []
+                    for (var key in res[0]) {
+                        this.columns1.push({'title': key, 'key': key, align: 'center'})
+                        value[key] = 'xxx'
+                    }
+                    this.data1 = [value]
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        readExcel (file) {
+            if (!/\.(xls|xlsx)$/.test(file.name.toLowerCase())) {
+                this.$Message.error('上传格式不正确，请上传xls或者xlsx格式')
+                return false;
+            }
+            const fileReader = new FileReader()
+            fileReader.onload = (ev) => {
+                var that = this
+                try {
+                    const data = ev.target.result
+                    const workbook = XLSX.read(data, {type: 'binary'})
+                    const wsname = workbook.SheetNames[0]
+                    const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname])
+                    let col = []
+                    for (var k in ws[0]) {
+                        col.push({'title': k, 'key': k})
+                    }
+                    for (var i = 0; i < ws.length; i++) {
+                        let sheetData = {}
+                        for (var key in ws[i]) {
+                            sheetData[key] = ws[i][key]
+                        }
+                        that.outputs.push(sheetData)
+                    }
+                    that.columns1 = col
+                } catch (error) {
+                    return false
+                }
+            }
+            fileReader.readAsBinaryString(file)
+        }
+    },
+    created () {
+        api.DataSchemaList()
+            .then(res => {
+                this.dataList = res
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
+}
 </script>
