@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DataShow from '@/components/util/DataShow'
+import DataShow from '@/components/DataShow'
 import DataList from '@/components/DataList'
 import SaveMany from '@/components/SaveMany'
 import index from '@/components/index'
@@ -12,9 +12,11 @@ export default new Router({
     {
       path: '/saveOne',
       component: DataList,
+      name: 'saveOne',
       children: [
         {
-          path: 'show',
+          path: '/show/:table_name',
+          name: 'datashow',
           component: DataShow
         }
       ]

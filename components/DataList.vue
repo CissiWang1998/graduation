@@ -42,13 +42,13 @@
             </Header>
             <Layout >
                 <Sider hide-trigger :style="{background: '#fff'}">
-                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']" @on-select="created">
-                        <MenuItem class="menuItem" v-for="menuItem in menuItems" v-text="menuItem[1]" :name="menuItem[2]" :key="menuItem[2]">单项录入</MenuItem>
+                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']" @on-select="onSelect2">
+                        <MenuItem class="menuItem" v-for="menuItem in menuItems" v-text="menuItem.name" :name="menuItem.table_name" :key="menuItem.table_name">单项录入</MenuItem>
                     </Menu>
                 </Sider>
                 <Layout>
                     <Content :style="{padding: '24px', minHeight: '600px', background: '#fff'}">
-                        <keep-alive><router-view> </router-view></keep-alive>
+                        <router-view> </router-view>
                     </Content>
                 </Layout>
             </Layout>
@@ -57,34 +57,27 @@
 </template>
 <script>
 import api from '../fetch/api'
-console.log(1)
 export default {
     data () {
         return {
             value13: '',
             select3: 'day',
-            menuItems: [[1, '1', 'student'], [2, '2', 'teacher']] // 数据项数
+            menuItems: null // 数据项数
         }
     },
     methods: {
         onSelect2 (name) {
-            console.log(name)
-            this.$router.replace('/saveOne/show')
-        },
-        created () {
-            console.log(1)
+            this.$router.replace({name: 'datashow', params: {table_name: name}})
+        }
+    },
+    created () {
             api.DataSchemaList()
                 .then(res => {
-                    console.log(res)
-                    if (res.success) {
-                        this.menuItems = res
-                    }
+                    this.menuItems = res
                 })
                 .catch(error => {
                     console.log(error);
                 });
-            // console.log(this.menuItems)
         }
-    }
 }
 </script>

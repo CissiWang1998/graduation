@@ -52,6 +52,12 @@ export default{
      * 获取数据列表
      */
     DataSchemaList () {
-        return fetchGet('/data/list')
+        return fetchGet(`/data/list`)
+    },
+    /**
+     * 获取指定数据项的全部数据
+     */
+    getTableDataByName (name) {
+        return fetchPost(`/data/detail`, {table_name: name})
     }
 }
