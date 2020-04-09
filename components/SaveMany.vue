@@ -57,11 +57,12 @@ export default {
             file: null,
             loadingStatus: false,
             comfirm_button_dis: true,
+            curr_table_name: '',
             dataList: [],
+            curr_data: [],
             model8: '',
             columns1: [],
-            data1: [],
-            outputs: []
+            data1: []
         }
     },
     methods: {
@@ -69,7 +70,6 @@ export default {
             this.comfirm_button_dis = false;
             this.file = file;
             this.readExcel(file)
-            this.data1 = this.outputs
             return false;
         },
         upload_file () {
@@ -81,13 +81,21 @@ export default {
                 this.$Message.info('请上传文件');
                 return;
             }
-            this.loadingStatus = true;
-            setTimeout(() => {
-                this.file = null;
-                this.loadingStatus = false;
-                this.$Message.success('Success')
-            }, 1500);
-            console.log(this.outputs)
+            if (Object.keys(this.curr_data).length !== this.columns1.length) {
+                this.$Message.info('文件列数不对');
+                return;
+            }
+            this.loadingStatus = true
+            api.saveTableData(this.data1, this.curr_table_name)
+                .then(res => {
+                    if (res.code === 400) { // 输入数据有问题
+                        this.$Message.info(res.message)
+                    }
+                    this.$Message.success('Success')
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         handleChange (value) {
             api.getTableDataByName(value)
@@ -100,6 +108,8 @@ export default {
                         value[key] = 'xxx'
                     }
                     this.data1 = [value]
+                    this.curr_data = res[0]
+                    this.curr_table_name = value
                 })
                 .catch(error => {
                     console.log(error);
@@ -119,6 +129,7 @@ export default {
                     const wsname = workbook.SheetNames[0]
                     const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname])
                     let col = []
+                    that.data1 = []
                     for (var k in ws[0]) {
                         col.push({'title': k, 'key': k})
                     }
@@ -127,7 +138,7 @@ export default {
                         for (var key in ws[i]) {
                             sheetData[key] = ws[i][key]
                         }
-                        that.outputs.push(sheetData)
+                        that.data1.push(sheetData)
                     }
                     that.columns1 = col
                 } catch (error) {
