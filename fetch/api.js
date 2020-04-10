@@ -64,8 +64,8 @@ export default{
      * 批量导入文件
      */
     saveTableData (datalist, name) {
-        console.log(datalist)
         console.log(name)
-        return fetchPost(`/data/add`, {data: datalist, table_name: name})
+        console.log(JSON.stringify(datalist))
+        return fetchPost(`/data/add`, {data: JSON.stringify(datalist), table_name: name})
     }
 }
