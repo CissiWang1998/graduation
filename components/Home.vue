@@ -56,7 +56,7 @@
                                 <Icon type="ios-keypad"></Icon>
                                 数据分析
                             </template>
-                            <MenuItem name="2-1">关联分析</MenuItem>
+                            <MenuItem name="corr_analysis">关联分析</MenuItem>
                             <MenuItem name="2-2">相关分析</MenuItem>
                         </Submenu>
                         <Submenu name="3">

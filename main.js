@@ -6,8 +6,10 @@ import router from './router'
 import Home from './components/Home'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
+import VCharts from 'v-charts'
 
 Vue.use(ViewUI)
+Vue.use(VCharts)
 
 Vue.config.productionTip = false
 

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import DataShow from '@/components/DataShow'
 import DataList from '@/components/DataList'
 import SaveMany from '@/components/SaveMany'
-import index from '@/components/index'
+import CorrAnalysis from '@/components/Corr_Analysis'
 
 Vue.use(Router)
 
@@ -26,8 +26,8 @@ export default new Router({
       component: SaveMany
     },
     {
-      path: '/index',
-      component: index
+      path: '/corr_analysis',
+      component: CorrAnalysis
     }
   ]
 })
