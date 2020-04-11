@@ -67,5 +67,11 @@ export default{
         console.log(name)
         console.log(JSON.stringify(datalist))
         return fetchPost(`/data/add`, {data: JSON.stringify(datalist), table_name: name})
+    },
+    /**
+     * 获取数据分析页面初始数据
+     */
+    getAnalysisInitData () {
+        return fetchGet(`/analysis/index`)
     }
 }
