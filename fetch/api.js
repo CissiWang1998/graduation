@@ -73,5 +73,11 @@ export default{
      */
     getAnalysisInitData () {
         return fetchGet(`/analysis/index`)
+    },
+    /**
+     * 获取学生生源数据
+     */
+    getStudentSource () {
+        return fetchGet(`/analysis/student_source`)
     }
 }
