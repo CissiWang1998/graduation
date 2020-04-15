@@ -4,6 +4,7 @@ import DataShow from '@/components/DataShow'
 import DataList from '@/components/DataList'
 import SaveMany from '@/components/SaveMany'
 import CorrAnalysis from '@/components/Corr_Analysis'
+import studentSourceAnalysis from '@/components/analysis/student_source_analysis'
 
 Vue.use(Router)
 
@@ -28,6 +29,10 @@ export default new Router({
     {
       path: '/corr_analysis',
       component: CorrAnalysis
+    },
+    {
+      path: '/student_source_analysis',
+      component: studentSourceAnalysis
     }
   ]
 })
