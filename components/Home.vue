@@ -64,7 +64,7 @@
                                 <Icon type="ios-analytics"></Icon>
                                 内部搜索
                             </template>
-                            <MenuItem name="3-1">数据查找</MenuItem>
+                            <MenuItem name="search">数据查找</MenuItem>
                         </Submenu>
                     </Menu>
                 </Sider>

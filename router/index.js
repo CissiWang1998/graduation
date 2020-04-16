@@ -3,8 +3,10 @@ import Router from 'vue-router'
 import DataShow from '@/components/DataShow'
 import DataList from '@/components/DataList'
 import SaveMany from '@/components/SaveMany'
-import CorrAnalysis from '@/components/Corr_Analysis'
+import CorrAnalysis from '@/components/analysis/Corr_Analysis'
 import studentSourceAnalysis from '@/components/analysis/student_source_analysis'
+import Search from '@/components/search/search'
+import SearchResult from '@/components/search/searchResult'
 
 Vue.use(Router)
 
@@ -33,6 +35,17 @@ export default new Router({
     {
       path: '/student_source_analysis',
       component: studentSourceAnalysis
+    },
+    {
+      path: '/search',
+      component: Search,
+      children: [
+        {
+          path: '/result/:search_index/:search_key',
+          name: 'searchResult',
+          component: SearchResult
+        }
+      ]
     }
   ]
 })
