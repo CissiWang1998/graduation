@@ -84,7 +84,6 @@ export default{
      * 搜索结果
      */
     getSearchResult (index, value) {
-        console.log(index, value)
         return fetchPost(`/search/`, {index: index, value: value})
     }
 }

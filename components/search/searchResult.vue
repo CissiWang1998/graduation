@@ -22,13 +22,12 @@ export default {
         getSearchPara () {
             this.search_index = this.$route.params.search_index
             this.search_key = this.$route.params.search_key
-            console.log(this.search_index, this.search_key)
             this.getSearchResult()
         },
         getSearchResult () {
             api.getSearchResult(this.search_index, this.search_key)
             .then(res => {
-                console.log(res)
+                this.search_data = res
             })
             .catch(error => {
                 console.log(error);
