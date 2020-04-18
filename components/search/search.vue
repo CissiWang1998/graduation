@@ -15,8 +15,8 @@
             <div class="layout-logo">
                 <Input v-model="search_key">
                     <Select v-model="search_index" slot="prepend" style="width: 80px">
-                        <Option value="student">学生</Option>
-                        <Option value="teacher">老师</Option>
+                        <Option value="student_info">学生</Option>
+                        <Option value="teacher_info">老师</Option>
                     </Select>
                     <Button slot="append" icon="ios-search" @click="search"></Button>
                 </Input>
@@ -34,7 +34,7 @@ export default {
     data () {
         return {
             search_key: '',
-            search_index: ''
+            search_index: 'teacher_info'
         }
     },
     methods: {

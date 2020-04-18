@@ -78,7 +78,13 @@ export default{
      * 获取学生生源数据
      */
     getStudentSource () {
-        console.log(1234)
         return fetchGet(`/analysis/student_source`)
+    },
+    /**
+     * 搜索结果
+     */
+    getSearchResult (index, value) {
+        console.log(index, value)
+        return fetchPost(`/search/`, {index: index, value: value})
     }
 }
