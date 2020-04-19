@@ -1,11 +1,20 @@
 <template>
     <div>
-        <List item-layout="vertical">
-            <ListItem v-for="item in search_data" :key="item.name">
-                <ListItemMeta  :title="item.name"/>
-                {{ item.info }}
-            </ListItem>
-        </List>
+        <ul item-layout="vertical">
+            <li v-for="item in search_data" :key="item.name" @click="select(item)">
+                <span>{{item.name}}</span>
+                <span>{{item.info}}</span>
+            </li>
+        </ul>
+        <Modal
+            v-model="modal"
+            title="详细信息">
+            <ul>
+                <li v-for="(key,value) in modal_dict" :key="key">
+                    {{key}}:{{value}}
+                </li>
+            </ul>
+        </Modal>
     </div>
 </template>
 <script>
@@ -13,9 +22,11 @@ import api from '../../fetch/api'
 export default {
     data () {
         return {
-            search_data: null,
+            search_data: [{name: 'test1', info: '测试1'}, {name: 'test2', info: '测试2'}],
             search_key: '',
-            search_index: ''
+            search_index: '',
+            modal: false,
+            modal_dict: null
         }
     },
     methods: {
@@ -32,6 +43,10 @@ export default {
             .catch(error => {
                 console.log(error);
             });
+        },
+        select (item) {
+            this.modal_dict = item
+            this.modal = true
         }
     },
     created () {
