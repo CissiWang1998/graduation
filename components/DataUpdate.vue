@@ -32,7 +32,7 @@
     </layout>
 </template>
 <script>
-import api from '../../fetch/api'
+import api from '../fetch/api'
 export default {
     data () {
         return {
@@ -46,9 +46,9 @@ export default {
             if (this.search_key === '' || this.search_index === '') {
                 return;
             }
-            let table_name = this.search_index.slice(7)
-            console.log(table_name)
-            api.getUpdateSearchResult(table_name, this.search_key)
+            let tableNamNe = this.search_index.slice(7)
+            console.log(tableNamNe)
+            api.getUpdateSearchResult(tableNamNe, this.search_key)
                 .then(res => {
                     let arr = []
                     res.forEach(element => {
@@ -63,7 +63,6 @@ export default {
         select (item) {
             this.$router.replace({name: this.search_index, params: {item: item}})
         }
-    },
-    
+    }
 }
 </script>

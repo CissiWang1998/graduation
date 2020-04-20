@@ -87,9 +87,9 @@ export default{
         return fetchPost(`/search/`, {index: index, value: value})
     },
     /**
-     * 查找用户
+     * 查找用户N
      */
-    getUpdateSearchResult (table_name, value) {
-        return fetchPost(`/update/`, {table_name: table_name, value: value})
+    getUpdateSearchResult (tableName, value) {
+        return fetchPost(`/update/`, {table_name: tableName, value: value})
     }
 }

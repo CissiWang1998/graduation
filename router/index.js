@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import DataShow from '@/components/DataShow'
-import DataList from '@/components/DataList'
+// import DataList from '@/components/DataList'
 import SaveMany from '@/components/SaveMany'
 import CorrAnalysis from '@/components/analysis/Corr_Analysis'
 import studentSourceAnalysis from '@/components/analysis/student_source_analysis'
@@ -16,7 +16,7 @@ export default new Router({
   routes: [
     {
       path: '/saveOne',
-      component: DataList,
+      component: UpdateTeacher,
       name: 'saveOne',
       children: [
         {
