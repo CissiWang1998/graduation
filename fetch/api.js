@@ -85,5 +85,11 @@ export default{
      */
     getSearchResult (index, value) {
         return fetchPost(`/search/`, {index: index, value: value})
+    },
+    /**
+     * 查找用户
+     */
+    getUpdateSearchResult (table_name, value) {
+        return fetchPost(`/update/`, {table_name: table_name, value: value})
     }
 }

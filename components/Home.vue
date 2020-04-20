@@ -50,6 +50,7 @@
                             </template>
                             <MenuItem name="saveOne" >单项录入</MenuItem>
                             <MenuItem name="saveMany" >批量录入</MenuItem>
+                            <MenuItem name="update" >修改数据</MenuItem>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">

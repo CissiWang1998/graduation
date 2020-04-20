@@ -7,6 +7,8 @@ import CorrAnalysis from '@/components/analysis/Corr_Analysis'
 import studentSourceAnalysis from '@/components/analysis/student_source_analysis'
 import Search from '@/components/search/search'
 import SearchResult from '@/components/search/searchResult'
+import DataUpdate from '@/components/DataUpdate'
+import UpdateTeacher from '@/components/update/UpdateTeacher'
 
 Vue.use(Router)
 
@@ -27,6 +29,18 @@ export default new Router({
     {
       path: '/saveMany',
       component: SaveMany
+    },
+    {
+      path: '/update',
+      component: DataUpdate,
+      name: 'update',
+      children: [
+        {
+          path: '/teacher/:item',
+          name: 'update_teacher',
+          component: UpdateTeacher
+        }
+      ]
     },
     {
       path: '/corr_analysis',

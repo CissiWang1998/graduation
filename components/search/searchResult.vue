@@ -11,7 +11,7 @@
             title="详细信息">
             <ul>
                 <li v-for="(key,value) in modal_dict" :key="key">
-                    {{key}}:{{value}}
+                    {{value}}:{{key}}
                 </li>
             </ul>
         </Modal>
@@ -22,7 +22,7 @@ import api from '../../fetch/api'
 export default {
     data () {
         return {
-            search_data: [{name: 'test1', info: '测试1'}, {name: 'test2', info: '测试2'}],
+            search_data: [],
             search_key: '',
             search_index: '',
             modal: false,
@@ -38,7 +38,12 @@ export default {
         getSearchResult () {
             api.getSearchResult(this.search_index, this.search_key)
             .then(res => {
-                this.search_data = res
+                let arr = []
+                res.forEach(element => {
+                    arr.push(element)
+                })
+                this.search_data = arr
+                // this.search_data = res
             })
             .catch(error => {
                 console.log(error);
