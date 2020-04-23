@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import DataShow from '@/components/DataShow'
-// import DataList from '@/components/DataList'
+import DataList from '@/components/DataList'
 import SaveMany from '@/components/SaveMany'
 import CorrAnalysis from '@/components/analysis/Corr_Analysis'
 import studentSourceAnalysis from '@/components/analysis/student_source_analysis'
@@ -9,6 +9,7 @@ import Search from '@/components/search/search'
 import SearchResult from '@/components/search/searchResult'
 import DataUpdate from '@/components/DataUpdate'
 import UpdateTeacher from '@/components/update/UpdateTeacher'
+import CourseEvaluation from '@/components/analysis/CourseEvaluation'
 
 Vue.use(Router)
 
@@ -16,7 +17,7 @@ export default new Router({
   routes: [
     {
       path: '/saveOne',
-      component: UpdateTeacher,
+      component: DataList,
       name: 'saveOne',
       children: [
         {
@@ -45,6 +46,10 @@ export default new Router({
     {
       path: '/corr_analysis',
       component: CorrAnalysis
+    },
+    {
+      path: '/course_evaluation',
+      component: CourseEvaluation
     },
     {
       path: '/student_source_analysis',

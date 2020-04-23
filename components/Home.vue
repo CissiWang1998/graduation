@@ -59,6 +59,7 @@
                             </template>
                             <MenuItem name="corr_analysis">数据分析</MenuItem>
                             <MenuItem name="student_source_analysis">生源统计</MenuItem>
+                            <MenuItem name="course_evaluation">评教数据</MenuItem>
                         </Submenu>
                         <Submenu name="3">
                             <template slot="title">

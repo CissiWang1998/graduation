@@ -91,5 +91,29 @@ export default{
      */
     getUpdateSearchResult (tableName, value) {
         return fetchPost(`/update/`, {table_name: tableName, value: value})
+    },
+    /**
+     * 老师列表
+     */
+    getTeacherList () {
+        return fetchGet(`/teacher/list`)
+    },
+    /**
+     * 单个老师的个课程评分
+     */
+    getSingleTeacherEvaluation (teacher) {
+        return fetchPost(`/evaluation/teacher/single`, {teacher: teacher})
+    },
+    /**
+     * 老师们评教分数平均值
+     */
+    getTeachersEvaluationAvgScores () {
+        return fetchGet(`evaluation/teacher/avg`)
+    },
+    /**
+     * 老师们评价成绩优良等占比
+     */
+    getTeacherEvaluationGradeDistributed () {
+        return fetchGet(`evaluation/teacher/distribute`)
     }
 }
